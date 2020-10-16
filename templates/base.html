@@ -1,14 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="keywords" content="サイトをキーワードで説明">
+    <meta name="discription" content="どんなサイトかを短い文章で説明"> 
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=1">
+    <link rel="icon" href="favicon.ico">
+<!-- link -->
+<!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="../static/css/style_pc.css">
+
+<!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <title>マッピンGood八代</title>
 </head>
 <body>
-    <p>testtesttest</p>
+    <header>
+        <nav>
+            <!-- <div class="card-panel orange lighten-2"> -->
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo">Top</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <!-- <ul class="right hide-on-med-and-down"> -->
+                    <li><a href="sass.html">ジャンル</a></li>
+                    <li><a href="badges.html">校区</a></li>
+                    <li><a href="login.html">ログイン</a></li>
+                    <li><a href="user_page.html">マイページ</a></li>
+                </ul>
+            </div>
+        </nav>
+        <!-- </div>   -->
+    </header>
+    {% block content %}
+	{% endblock %}
+
+    <footer>
+		<p>Copyright &copy; DEMO all rights reserved.</p>
+	</footer>
+
     
 </body>
 </html>
-
-<!-- test kyoro -->
