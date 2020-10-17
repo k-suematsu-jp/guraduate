@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>マイページへログイン</h2>
+
+<form action="/login" method="POST">
+    ユーザーID：<input type="text" name="name">
+    パスワード：<input type="password" name="password">
+    <input type="submit" name="save" value="ログイン">
+</form>
+
+<p>ユーザーIDをお持ちでないですか？</p>
+<button onclick="location.href='/register'">新規登録はこちら</button>
+
+{% endblock %}
