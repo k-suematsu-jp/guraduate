@@ -111,6 +111,22 @@ def greet():
     else:
         return render_template("login.html")
 
+@app.route("/edit")
+def edit():
+    if "user_id" in session:
+        user_id = session["user_id"][0]
+        print(user_id)
+        conn = sqlite3.connect("mappin_good.db")
+        c = conn.cursor()
+        c.execute("select * from users where user_id=?",(user_id,))
+        name_edit = c.fetchone()
+        print(name_edit)
+        c.close()
+        return render_template("edit.html",nickname = nickname)
+    else:
+        return render_template("login.html")
+
+
 
 @app.route("/logout", methods=["GET"])
 def logout():
