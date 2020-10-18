@@ -6,9 +6,10 @@ from datetime import datetime
 # flaskをimportしてflaskを使えるようにする
 # appにFlaskを定義して使えるようにしています。Flask クラスのインスタンスを作って、 app という変数に代入しています。
 
-
+# appという名前でFlaskを使いますよ
 app = Flask(__name__)
-
+# secret key を設定
+app.secret_key = "sunabaco"
 
 @app.route("/")
 def top_picture():
@@ -79,19 +80,44 @@ def regist_post():
     # データベースの中身が見れるようにする
     c = conn.cursor()
     # SQL文を実行する
-    c.execute("insert into users values(null,?,?,?,?)",(name,password,site_name,nickname))
+    c.execute("insert into users values(null,?,?,?,?)",(name,password,nickname,site_name))
     # 変更を適用
     conn.commit()
     # 接続終了
     c.close()
-    return redirect("/user_page/<nickname>")
+    return redirect("/login")
 
 
-@app.route("/user_page/<nickname>")
-def greet(nickname):
-    return nickname + "さん　のページ"
+# login状態でないと見れないページには、
+# if "user_id" in session:
+#        return 
+#    else:
+#        return 
+# でその動作部分全体を囲ってあげる
+
+@app.route("/user_page")
+def greet():
+    if "user_id" in session:
+        user_id = session["user_id"][0]
+        print(user_id)
+        conn = sqlite3.connect("mappin_good.db")
+        c = conn.cursor()
+        c.execute("select nickname from users where user_id=?",(user_id,))
+        nickname = c.fetchone()
+        nickname = nickname[0]
+        print(nickname)
+        c.close()
+        return render_template("/user_page.html",nickname = nickname)
+    else:
+        return render_template("login.html")
 
 
+@app.route("/logout", methods=["GET"])
+def logout():
+    #セッションからユーザ名を取り除く (ログアウトの状態にする)
+    session.pop("user_id", None)
+    # ログインページにリダイレクトする
+    return redirect("/")
 
 
 
