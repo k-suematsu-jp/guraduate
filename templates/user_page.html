@@ -4,5 +4,12 @@
 <h1>{{ nickname }}さんのページ</h1>
 <button onclick="location.href='/edit'">編集はこちら</button>
 
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="upload"></br>
+    <p>タイトル</p>
+    <input type="text" name="comment"><br>
+    <input type="submit" value="画像アップロード"></br>
+</form>
+
 {% endblock %}
 

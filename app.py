@@ -127,6 +127,42 @@ def edit():
         return render_template("login.html")
 
 
+@app.route("/upload", methods=["POST"])
+def do_upload():
+    # bbs.tplのinputタグ name="upload" をgetしてくる
+    upload = request.files["upload"]
+    # uploadで取得したファイル名をlower()で全部小文字にして、ファイルの最後尾の拡張子が'.png', '.jpg', '.jpeg'ではない場合、returnさせる。
+    if not upload.filename.lower().endswith((".png", ".jpg", ".jpeg")):
+        return "png,jpg,jpeg形式のファイルを選択してください"
+    # 下の def get_save_path()関数を使用して "./static/img/" パスを戻り値として取得する。
+    save_path = get_save_path()
+    # パスが取得できているか確認
+    print(save_path)
+    # ファイルネームをfilename変数に代入
+    filename = upload.filename
+    # 画像ファイルを./static/imgフォルダに保存。 os.path.join()は、パスとファイル名をつないで返してくれます。
+    upload.save(os.path.join(save_path,filename))
+    # ファイル名が取れることを確認、あとで使うよ
+    print(filename)
+    
+    # アップロードしたユーザのIDを取得
+    user_id = session["user_id"][0]
+    comment = request.form.get("comment")
+    conn = sqlite3.connect("mappin_good.db")
+    c = conn.cursor()
+    # update文
+    print(user_id)
+    # 上記の filename 変数ここで使うよ
+    c.execute("insert into picture values(null,?,?,?,null,null,null,null,null)",(user_id,comment,filename))
+    conn.commit()
+    conn.close()
+
+    return redirect ("/user_page")
+
+#課題4の答えはここも
+def get_save_path():
+    path_dir = "static/img"
+    return path_dir 
 
 @app.route("/logout", methods=["GET"])
 def logout():
@@ -134,6 +170,8 @@ def logout():
     session.pop("user_id", None)
     # ログインページにリダイレクトする
     return redirect("/")
+
+
 
 
 
