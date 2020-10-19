@@ -148,12 +148,13 @@ def do_upload():
     # アップロードしたユーザのIDを取得
     user_id = session["user_id"][0]
     comment = request.form.get("comment")
+    time = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
     conn = sqlite3.connect("mappin_good.db")
     c = conn.cursor()
     # update文
     print(user_id)
     # 上記の filename 変数ここで使うよ
-    c.execute("insert into picture values(null,?,?,?,null,null,null,null,null)",(user_id,comment,filename))
+    c.execute("insert into picture values(null,?,?,?,?,null,null,null,null)",(user_id,comment,filename,time))
     conn.commit()
     conn.close()
 
