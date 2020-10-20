@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+.kongetuno_itimai {
+    color: chartreuse;
+}
+
 .top_img1 {
     display: block;
     margin-left: auto;
