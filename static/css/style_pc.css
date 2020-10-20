@@ -1,1 +1,74 @@
 @charset "UTF-8";
+
+.top_img1 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.top_comment {
+    color: chartreuse;
+    text-align: center
+}
+
+/* .top_img6 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
+} */
+
+.container_img {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
+
+.container_img img {
+    object-fit: cover;
+    width: 600px;
+    height: 400px;
+}
+
+p {
+    text-align: center
+}
+
+.junru {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.junru button {
+    font-size: 1.4em;
+    font-weight: bold;
+    padding: 10px 30px;
+    background-color: #248;
+    color: #fff;
+    border-style: none;
+}
+
+.kouku {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: center;
+    flex-wrap: wrap
+}
+
+.kouku button {
+    font-size: 1.4em;
+    font-weight: bold;
+    padding: 10px 30px;
+    background-color: #248;
+    color: #fff;
+    border-style: none;
+}
+
+.container_brows_img {
+    display: flex;
+}
