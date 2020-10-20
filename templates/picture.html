@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="name_kouku">投稿者：{{name[0][0]}}校区:{{name[0][1]}}</div>
+<img src="/static/img/{{img_profile[0][3]}}" >
+<h3>マッピングッド数：{{img_profile[0][６]}}</h3>
+<div class="comment">{{img_profile[0][2]}}</div>
+<div class="junru_kouku">ジャンル：{{img_profile[0][8]}}撮影校区：{{img_profile[0][7]}}</div>
+
+{% endblock %}
