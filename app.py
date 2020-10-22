@@ -27,13 +27,13 @@ def top_picture():
     c.execute("select picture,comment,picture_id from picture order by time desc ")
     new_imgs = c.fetchmany(size=4)
 
-    c.execute("select site_name from site")
-    site_name = c.fetchall()
+    c.execute("select site_name,site_point from site order by site_point desc")
+    site_point = c.fetchall()
 
     # 接続終了
     c.close()
     # 接続終了
-    return render_template("index.html", top_img=top_img,new_imgs=new_imgs, site_name=site_name)
+    return render_template("index.html", top_img=top_img,new_imgs=new_imgs,site_point=site_point)
 
 
 @app.route("/login",methods=["GET"])
@@ -248,11 +248,32 @@ def picture(picture_id):
     c.execute("select nickname,site_name,user_id from users where user_id = ? ", (img_profile[0][1],))
     name=c.fetchall()
     c.close()
-    return render_template("picture.html", img_profile=img_profile,name=name)
+    return render_template("picture.html", img_profile=img_profile,name=name,picture_id=picture_id)
+
+
+@app.route('/add' , methods=["POST"])
+def del_task():
+    picture_id =request.form.get("picture_id")
+    # picture_id = int(picture_id)
+    conn = sqlite3.connect('mappin_good.db')
+    c = conn.cursor()
+
+    # 指定されたitem_idを元にDBデータを削除せずにdel_flagを1にして一覧からは表示しないようにする
+    # 課題1の答えはここ del_flagを1にupdateする
+    c.execute("update picture set good_count= 2000 where picture_id=?", (picture_id,))
+
+    c.execute("select site_name from picture where picture_id = ?",(picture_id,))
+    site_name=c.fetchone()
+
+    c.execute("update site set site_point = 2000 where site_name = ?", (site_name[0],))
+    conn.close()
+    
+    return redirect(("/"))
 
 
 
 
 
 if __name__ == "__main__":
+
     app.run(debug=True)
