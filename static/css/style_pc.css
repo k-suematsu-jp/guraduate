@@ -1,26 +1,53 @@
 @charset "UTF-8";
 
+.nav-wrapper{
+    height: 100px;
+}
+
+.mappingood-logo{
+    height: 50px;
+    width: 200px;
+    object-fit: cover;
+}
+
+/* トップページのCSS */
 .kongetuno_itimai {
-    color: chartreuse;
+    padding-left: 20%;
+}
+
+.top_img_area {
+    background-color: #fff8dc;
+    height: 1000px;
 }
 
 .top_img1 {
     display: block;
-    margin-left: auto;
     margin-right: auto;
+    margin-left: auto;
+    width: 900px;
+    height: 600px;
+    object-fit: contain;
+}
+
+.top_img_name {
+    text-align: center;
+    font-size: 35px;
 }
 
 .top_comment {
-    color: chartreuse;
-    text-align: center
+    font-size: 35px;
+    text-align: center;
 }
 
-/* .top_img6 {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 1000px;
-} */
+.top_img2 {
+    width: 600px;
+    height: 400px;
+    object-fit: contain;
+}
+
+.item {
+    padding: 20px;
+}
 
 .container_img {
     display: flex;
@@ -29,14 +56,17 @@
     justify-content: center;
 }
 
-.container_img img {
-    object-fit: cover;
-    width: 600px;
-    height: 400px;
-}
-
 p {
     text-align: center
+}
+
+.junru_area {
+    background-color: #fff8dc;
+    height: 200px;
+}
+
+.kouku_area {
+    margin-bottom: 100px;
 }
 
 .junru {
@@ -73,6 +103,60 @@ p {
     border-style: none;
 }
 
+/* ーーーーーーーーーーーーーーー */
+
+/* /* 閲覧ページのCSS * */
+
 .container_brows_img {
     display: flex;
+    justify-content: center;
 }
+
+
+.browsing_img {
+    width: 600px;
+    height: 400px;
+    object-fit: contain;
+}
+
+
+.browsing_prf {
+    font-size: 30px;
+}
+
+/* ーーーーーーーーーーーーーーーー */
+
+/* ピクチャーページのCSS */
+
+.picturepage_name_kouku {
+    font-size: 30px;
+}
+
+.picturepage_picture {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    width: 900px;
+    height: 600px;
+    object-fit: contain;
+}
+
+.mappingood {
+    font-size: 30px;
+    text-align: center;
+}
+
+.picturepage_comment {
+    font-size: 40px;
+    text-align: center;
+}
+
+/* ----------------------------- */
+
+/* 、パーソナルページ固有のCSS */
+
+.personalpage_profile {
+    font-size: 30px;
+}
+
+/* ----------------------------- */
