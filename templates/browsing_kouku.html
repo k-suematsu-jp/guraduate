@@ -1,14 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-    <h3>{{kouku}}の閲覧ページ</h3>
-    <h3>これはテスト</h3>
+    <h3>{{kouku}}校区の閲覧ページ</h3>
 
 {% for item in brows_list %}
 <div class="container_brows_img">
     <div>
-        <img src="/static/img/{{item["picture"]}}">
+        <a href="/picture/{{item["picture_id"]}}"><img src="/static/img/{{item["picture"]}}"></a>
     </div>
-    <div>
+    <div class="browsing_prf">
         <div class="contributor">投稿者：{{item["user_id"]}}</div>
         <div class="brows_comment">{{item["comment"]}}</div>
         <div class="junru_name">ジャンル：{{item["junru_name"]}}</div>

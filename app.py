@@ -18,15 +18,14 @@ def top_picture():
     # データベースの中身が見えるようにする
     c = conn.cursor()
     # sqlを実行する
-    c.execute("select picture,comment from picture where picture_id =1")
+    # ここのピクチャーidは手動で変更
+    c.execute("select user_id,picture,comment,time from picture where picture_id =1")
     # fetchoneはタプル型
     top_img = c.fetchone()
-    # print(top_img)
-
-    c.execute("select picture,comment from picture order by time desc ")
+    print(top_img)
+    
+    c.execute("select picture,comment,picture_id from picture order by time desc ")
     new_imgs = c.fetchmany(size=4)
-
-    # print(new_imgs)
 
     c.execute("select site_name from site")
     site_name = c.fetchall()
@@ -34,7 +33,7 @@ def top_picture():
     # 接続終了
     c.close()
     # 接続終了
-    return render_template("index.html", top_img=top_img, new_imgs=new_imgs, site_name=site_name)
+    return render_template("index.html", top_img=top_img,new_imgs=new_imgs, site_name=site_name)
 
 
 @app.route("/login",methods=["GET"])
@@ -115,8 +114,16 @@ def greet():
         nickname = c.fetchone()
         nickname = nickname[0]
         print(nickname)
+
+        c.execute(
+                "select * from picture where user_id = ? order by time desc ", (user_id,))
+        my_list = []
+        for row in c.fetchall():
+            my_list.append({"picture_id": row[0], "user_id": row[1], "comment": row[2], "picture": row[3],
+                                "time": row[4], "location_no": row[5], "good_count": row[6], "site_name": row[7], "junru_name": row[8], })
+
         c.close()
-        return render_template("/user_page.html",nickname = nickname)
+        return render_template("/user_page.html",nickname = nickname,my_list=my_list)
     else:
         return render_template("login.html")
 
@@ -203,7 +210,7 @@ def brows_kouku(kouku):
     c = conn.cursor()
     print(kouku)
     c.execute(
-        "select * from picture where site_name = ? order by time desc", (kouku,))
+        "select * from picture  where site_name = ? order by time desc", (kouku,))
     brows_list = []
     for row in c.fetchall():
         brows_list.append({"picture_id": row[0], "user_id": row[1], "comment": row[2], "picture": row[3],
@@ -212,23 +219,23 @@ def brows_kouku(kouku):
     print(brows_list)
     return render_template("browsing_kouku.html", kouku=kouku, brows_list=brows_list)
 
-@app.route('/personal_page/<string:name>')
-def brows_person(name):
+@app.route('/personal_page/<int:user_id>')
+def brows_person(user_id):
     conn = sqlite3.connect('mappin_good.db')
     c = conn.cursor()
-    print(name)
+    
     c.execute(
-        "select * from picture where user_id = ? order by time desc", (name,))
+        "select * from picture where user_id = ? order by time desc ", (user_id,))
     brows_list = []
     for row in c.fetchall():
         brows_list.append({"picture_id": row[0], "user_id": row[1], "comment": row[2], "picture": row[3],
                            "time": row[4], "location_no": row[5], "good_count": row[6], "site_name": row[7], "junru_name": row[8], })
     
-    c.execute("select nickname,site_name from users where username = ? ", (name,))
+    c.execute("select nickname,site_name from users where user_id = ? ", (user_id,))
     profile=c.fetchall()
     c.close()
     print(profile)
-    return render_template("personal_page.html", name=name, brows_list=brows_list, profile=profile)
+    return render_template("personal_page.html", brows_list=brows_list, profile=profile)
 
 @app.route('/picture/<int:picture_id>')
 def picture(picture_id):
@@ -238,7 +245,7 @@ def picture(picture_id):
     c.execute("select * from picture where picture_id = ? ", (picture_id,))
     img_profile=c.fetchall()
 
-    c.execute("select nickname,site_name from users where username = ? ", (img_profile[0][1],))
+    c.execute("select nickname,site_name,user_id from users where user_id = ? ", (img_profile[0][1],))
     name=c.fetchall()
     c.close()
     return render_template("picture.html", img_profile=img_profile,name=name)
