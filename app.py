@@ -136,7 +136,8 @@ def edit():
         c = conn.cursor()
         c.execute("select * from users where user_id=?",(user_id,))
         name_edit = c.fetchone()
-        print(name_edit)
+        nickname = name_edit[3]
+        print(nickname)
         c.close()
         return render_template("edit.html",nickname = nickname)
     else:
@@ -165,12 +166,15 @@ def do_upload():
     user_id = session["user_id"][0]
     comment = request.form.get("comment")
     time = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+    kouku = request.form.get("kouku")
+    junru = request.form.get("junru")
+    print(kouku)
+    print(junru)
     conn = sqlite3.connect("mappin_good.db")
     c = conn.cursor()
     # update文
-    print(user_id)
     # 上記の filename 変数ここで使うよ
-    c.execute("insert into picture values(null,?,?,?,?,null,null,null,null)",(user_id,comment,filename,time))
+    c.execute("insert into picture values(null,?,?,?,?,null,null,?,?)",(user_id,comment,filename,time,kouku,junru))
     conn.commit()
     conn.close()
 
